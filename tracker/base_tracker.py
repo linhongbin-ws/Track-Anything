@@ -17,7 +17,7 @@ from tools.painter import mask_painter
 from tools.base_segmenter import BaseSegmenter
 from torchvision.transforms import Resize
 import progressbar
-
+import pathlib
 
 class BaseTracker:
     def __init__(self, xmem_checkpoint, device, sam_model=None, model_type=None) -> None:
@@ -26,7 +26,8 @@ class BaseTracker:
         xmem_checkpoint: checkpoint of XMem model
         """
         # load configurations
-        with open("tracker/config/config.yaml", 'r') as stream: 
+
+        with open(str(pathlib.Path(__file__).parent / "config/config.yaml"), 'r') as stream: 
             config = yaml.safe_load(stream) 
         # initialise XMem
         network = XMem(config, xmem_checkpoint).to(device).eval()

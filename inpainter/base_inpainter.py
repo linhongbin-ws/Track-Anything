@@ -10,7 +10,7 @@ import numpy as np
 from tqdm import tqdm
 
 from inpainter.util.tensor_util import resize_frames, resize_masks
-
+import pathlib
 
 class BaseInpainter:
 	def __init__(self, E2FGVI_checkpoint, device) -> None:
@@ -23,7 +23,7 @@ class BaseInpainter:
 		self.model.eval()
 		self.device = device
 		# load configurations
-		with open("inpainter/config/config.yaml", 'r') as stream: 
+		with open(str(pathlib.Path(__file__).parent / "config/config.yaml"), 'r') as stream: 
 			config = yaml.safe_load(stream) 
 		self.neighbor_stride = config['neighbor_stride']
 		self.num_ref = config['num_ref']
